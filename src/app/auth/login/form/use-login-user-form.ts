@@ -27,7 +27,7 @@ export const UseLoginUserForm = () => {
       const result = await signIn('credentials', {
         email: data.email,
         password: data.password,
-        callbackUrl: '/',
+        redirect: false,
       })
 
       if (result?.error) {
@@ -59,7 +59,8 @@ export const UseLoginUserForm = () => {
   const handleGithubSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('github', { callbackUrl: '/dashboard' })
+      await signIn('github')
+      router.push('/dashboard')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({

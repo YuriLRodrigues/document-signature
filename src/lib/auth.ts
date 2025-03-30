@@ -57,10 +57,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async redirect({ url, baseUrl }) {
-      return '/dashboard'
-    },
     async session({ token, session }) {
       if (token) {
         session.user = {
