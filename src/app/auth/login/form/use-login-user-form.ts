@@ -27,7 +27,7 @@ export const UseLoginUserForm = () => {
       const result = await signIn('credentials', {
         email: data.email,
         password: data.password,
-        redirect: false,
+        callbackUrl: '/',
       })
 
       if (result?.error) {
