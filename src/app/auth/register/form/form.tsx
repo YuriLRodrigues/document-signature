@@ -1,5 +1,5 @@
 'use client'
-import { FaGoogle } from 'react-icons/fa'
+import { FaGithub, FaGoogle } from 'react-icons/fa'
 
 import { Button } from '@/components/ui/button'
 import { CardContent } from '@/components/ui/card'
@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { UseRegisterUserForm } from './use-register-user-form'
 
 export const RegisterUserForm = () => {
-  const { form, handleGoogleSignIn, isLoading, onSubmit } = UseRegisterUserForm()
+  const { form, handleGoogleSignIn, handleGitHubSignIn, isLoading, onSubmit } = UseRegisterUserForm()
   return (
     <CardContent>
       <Form {...form}>
@@ -79,10 +79,16 @@ export const RegisterUserForm = () => {
           <span className="bg-background text-muted-foreground px-2">Ou continue com</span>
         </div>
       </div>
-      <Button variant="outline" type="button" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
-        <FaGoogle className="mr-2 h-4 w-4" />
-        Google
-      </Button>
+      <div className="space-y-2">
+        <Button variant="outline" type="button" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
+          <FaGoogle className="mr-2 h-4 w-4" />
+          Google
+        </Button>
+        <Button variant="outline" type="button" className="w-full" onClick={handleGitHubSignIn} disabled={isLoading}>
+          <FaGithub className="mr-2 h-4 w-4" />
+          GitHub
+        </Button>
+      </div>
     </CardContent>
   )
 }

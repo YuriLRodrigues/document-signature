@@ -75,10 +75,27 @@ export const UseRegisterUserForm = () => {
     }
   }
 
+  const handleGitHubSignIn = async () => {
+    setIsLoading(true)
+    try {
+      await signIn('github')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Falha ao fazer registro com o GitHub',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     isLoading,
     form,
     onSubmit,
     handleGoogleSignIn,
+    handleGitHubSignIn,
   }
 }

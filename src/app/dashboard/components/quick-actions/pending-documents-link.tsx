@@ -1,13 +1,18 @@
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Clock } from 'lucide-react'
 
 export const PendingDocumentsLink = async () => {
+  const session = await getServerSession(authOptions)
+  const userIsAdmin = session?.user.role === 'ADMIN'
   const pendingDocuments = await prisma.document.count({
     where: {
+      userId: userIsAdmin ? undefined : session?.user.id,
       status: 'PENDING',
     },
   })
