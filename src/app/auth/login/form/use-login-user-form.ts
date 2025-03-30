@@ -59,8 +59,7 @@ export const UseLoginUserForm = () => {
   const handleGithubSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('github')
-      router.push('/dashboard')
+      await signIn('github', { callbackUrl: '/api/auth/login' })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
