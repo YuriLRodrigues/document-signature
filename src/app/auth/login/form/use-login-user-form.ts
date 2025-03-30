@@ -56,16 +56,16 @@ export const UseLoginUserForm = () => {
     }
   }
 
-  const handleGithubSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('github', { callbackUrl: '/dashboard' })
+      await signIn('google', { callbackUrl: '/dashboard' })
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: 'Erro',
-        description: 'Erro ao se conectar com o github',
+        description: 'Erro ao se conectar com o google',
         variant: 'destructive',
       })
     } finally {
@@ -77,6 +77,6 @@ export const UseLoginUserForm = () => {
     isLoading,
     form,
     onSubmit,
-    handleGithubSignIn,
+    handleGoogleSignIn,
   }
 }

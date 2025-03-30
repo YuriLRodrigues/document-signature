@@ -1,15 +1,15 @@
 'use client'
+import { FaGoogle } from 'react-icons/fa'
+
 import { Button } from '@/components/ui/button'
 import { CardContent } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { Github } from 'lucide-react'
-
 import { UseLoginUserForm } from './use-login-user-form'
 
 export const LoginUserForm = () => {
-  const { form, handleGithubSignIn, isLoading, onSubmit } = UseLoginUserForm()
+  const { form, handleGoogleSignIn, isLoading, onSubmit } = UseLoginUserForm()
 
   return (
     <CardContent>
@@ -54,9 +54,9 @@ export const LoginUserForm = () => {
           <span className="bg-background text-muted-foreground px-2">Ou continue com</span>
         </div>
       </div>
-      <Button variant="outline" type="button" className="w-full" onClick={handleGithubSignIn} disabled={isLoading}>
-        <Github className="mr-2 h-4 w-4" />
-        GitHub
+      <Button variant="outline" type="button" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
+        <FaGoogle className="mr-2 h-4 w-4" />
+        Google
       </Button>
     </CardContent>
   )

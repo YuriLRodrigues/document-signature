@@ -59,15 +59,15 @@ export const UseRegisterUserForm = () => {
     }
   }
 
-  const handleGithubSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('github', { callbackUrl: '/dashboard' })
+      await signIn('google', { callbackUrl: '/dashboard' })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Falha ao fazer registro com o GitHub',
+        description: 'Falha ao fazer registro com o Google',
         variant: 'destructive',
       })
     } finally {
@@ -79,6 +79,6 @@ export const UseRegisterUserForm = () => {
     isLoading,
     form,
     onSubmit,
-    handleGithubSignIn,
+    handleGoogleSignIn,
   }
 }
