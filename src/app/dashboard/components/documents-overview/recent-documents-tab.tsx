@@ -11,8 +11,6 @@ import { prisma } from '@/lib/prisma'
 import { formatDatePtBR } from '@/utils/format-date-pt-br'
 import { ArrowRight, FileText, Upload } from 'lucide-react'
 
-import { RecentDocument } from './type'
-
 export const RecentDocumentsTab = async () => {
   const session = await getServerSession(authOptions)
   const userIsAdmin = session?.user.role === 'ADMIN'
@@ -51,7 +49,7 @@ export const RecentDocumentsTab = async () => {
         )}
         {recentDocuments.length > 0 && (
           <div className="flex min-h-full flex-col justify-between space-y-4 transition-none duration-initial">
-            {recentDocuments.map((doc: RecentDocument) => (
+            {recentDocuments.map((doc) => (
               <div key={doc.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div className="flex items-center gap-4">
                   <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">

@@ -14,7 +14,6 @@ import { ptBR } from 'date-fns/locale'
 import { FileText, Upload, Eye } from 'lucide-react'
 
 import { DeleteDocumentButton } from './delete-document-button'
-import { Document } from './types'
 
 type DocumentsListProps = {
   searchedUserId?: string
@@ -68,7 +67,7 @@ export const DocumentsList = async ({ searchedUserId, status }: DocumentsListPro
       )}
       {documents.length > 0 && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {documents.map((document: Document) => (
+          {documents.map((document) => (
             <Card key={document.id}>
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">

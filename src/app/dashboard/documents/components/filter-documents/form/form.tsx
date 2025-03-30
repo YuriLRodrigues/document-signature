@@ -10,13 +10,11 @@ import { Search, X } from 'lucide-react'
 
 import { UseFilterDocumentsForm } from './use-filter-documents-form'
 
-type User = {
-  id: string
-  name: string
-}
-
 type FilterDocumentsFormProps = {
-  users: User[]
+  users: Array<{
+    id: string
+    name: string
+  }>
 }
 
 export const FilterDocumentsForm = ({ users }: FilterDocumentsFormProps) => {
@@ -41,7 +39,7 @@ export const FilterDocumentsForm = ({ users }: FilterDocumentsFormProps) => {
                     <SelectContent>
                       <div className="grid">
                         <ScrollArea className="max-h-[110px] pr-3">
-                          {users.map((user: User) => (
+                          {users.map((user) => (
                             <SelectItem key={user.id} value={user.id.toString()}>
                               {user.name}
                             </SelectItem>
