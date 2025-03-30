@@ -59,7 +59,7 @@ export const UseLoginUserForm = () => {
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('google', { callbackUrl: '/dashboard' })
+      await signIn('google')
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
