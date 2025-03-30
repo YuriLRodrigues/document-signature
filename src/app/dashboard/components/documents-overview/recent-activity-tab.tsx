@@ -11,6 +11,8 @@ import { mappingActivityTypeIcon, mappingActivityTypeLabel, mappingGetActivityDa
 import { subDays } from 'date-fns'
 import { AlertCircle, ArrowRight } from 'lucide-react'
 
+import { RecentActivity } from './type'
+
 export const RecentActivityTab = async () => {
   const session = await getServerSession(authOptions)
   const userName = session?.user.name
@@ -61,7 +63,7 @@ export const RecentActivityTab = async () => {
         )}
         {recentActivity.length > 0 && (
           <div className="space-y-4">
-            {recentActivity.map((activity) => {
+            {recentActivity.map((activity: RecentActivity) => {
               return (
                 <div key={activity.id} className="flex items-center justify-between rounded-lg border p-4">
                   <div className="flex items-center gap-4">
