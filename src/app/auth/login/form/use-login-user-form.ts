@@ -60,6 +60,7 @@ export const UseLoginUserForm = () => {
     setIsLoading(true)
     try {
       await signIn('github', { callbackUrl: '/dashboard' })
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
