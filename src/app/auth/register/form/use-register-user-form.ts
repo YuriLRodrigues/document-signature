@@ -62,7 +62,7 @@ export const UseRegisterUserForm = () => {
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('google')
+      await signIn('google', { callbackUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`, redirect: false })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
@@ -78,7 +78,7 @@ export const UseRegisterUserForm = () => {
   const handleGitHubSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('github')
+      await signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`, redirect: false })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
