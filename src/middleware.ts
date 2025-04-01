@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 
-import { jwtDecode } from 'jwt-decode' // Você precisará instalar esta biblioteca
+import { jwtDecode } from 'jwt-decode'
 
 export function middleware(req: NextRequest) {
   const tokenKey = process.env.NEXT_AUTH_TOKEN_KEY || 'next-auth.session-token'
