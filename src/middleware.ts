@@ -1,31 +1,25 @@
+import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 
-import { jwtDecode } from 'jwt-decode'
+export async function middleware(req: NextRequest) {
+  const tokenSecretKey = process.env.NEXTAUTH_SECRET as string
+  const token = await getToken({ req, secret: tokenSecretKey })
 
-export function middleware(req: NextRequest) {
-  const tokenKey = process.env.NEXT_AUTH_TOKEN_KEY || 'next-auth.session-token'
-  const token = req.cookies.get(tokenKey)?.value
-
-  const isTokenValid = (token: string | undefined): boolean => {
+  const isTokenValid = async (): Promise<boolean> => {
     if (!token) return false
+    const exp = token.exp as number
+    const now = Math.floor(Date.now() / 1000)
 
-    try {
-      const decoded = jwtDecode<{ exp?: number }>(token)
-
-      if (decoded.exp) {
-        const nowInSeconds = Math.floor(Date.now() / 1000)
-        return decoded.exp > nowInSeconds
-      }
-
-      return true
-    } catch {
+    if (exp && exp < now) {
       return false
     }
+
+    return true
   }
 
   const isAuthPage = req.nextUrl.pathname.startsWith('/auth')
-  const isLoggedIn = isTokenValid(token)
+  const isLoggedIn = await isTokenValid()
 
   if (isLoggedIn && isAuthPage) {
     return NextResponse.redirect(new URL('/dashboard', req.url))
@@ -33,7 +27,7 @@ export function middleware(req: NextRequest) {
 
   if (!isLoggedIn && req.nextUrl.pathname.includes('/dashboard')) {
     const response = NextResponse.redirect(new URL('/auth/login', req.url))
-    response.cookies.delete(tokenKey)
+    response.cookies.delete(tokenSecretKey)
     return response
   }
 
