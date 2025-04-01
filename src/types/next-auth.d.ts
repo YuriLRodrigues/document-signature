@@ -10,6 +10,7 @@ declare module 'next-auth' {
       email?: string | null
       image?: string | null
       role: UserRoleType | null
+      maxAge: number | null
     } & DefaultSession['user']
   }
 
@@ -19,6 +20,7 @@ declare module 'next-auth' {
     email?: string | null
     image?: string | null
     role: UserRoleType | null
+    maxAge: number | null
   }
 
   interface JWT {
@@ -27,5 +29,6 @@ declare module 'next-auth' {
     email?: string | null
     image?: string | null
     role: UserRoleType | null
+    maxAge: number | null
   }
 }

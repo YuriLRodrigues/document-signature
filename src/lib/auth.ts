@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
+    maxAge: 60 * 60 * 24, // 1 day
   },
   pages: {
     signIn: '/auth/login',
@@ -57,6 +58,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           role: user.role as UserRoleType,
+          maxAge: 60 * 60 * 24,
         }
       },
     }),
@@ -82,6 +84,18 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role || ''
       }
       return token
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: process.env.NEXT_AUTH_TOKEN_VARIABLE as string,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        maxAge: 60 * 60 * 24,
+      },
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
