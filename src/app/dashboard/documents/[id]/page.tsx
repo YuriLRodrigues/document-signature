@@ -81,7 +81,7 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
       <div className="grid gap-6 md:grid-cols-3">
         <div className="md:col-span-2">
           <Card className="flex h-full max-h-[600px] min-h-[500px] items-center justify-center p-4">
-            <iframe src={`/api/documents/${document.id}/view`} className="h-full w-full" title={document.name} />
+            <iframe src={`${document.fileKey}`} className="h-full w-full" title={document.name} />
           </Card>
         </div>
         <div>

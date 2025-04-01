@@ -3,15 +3,23 @@ import { NextResponse } from 'next/server'
 
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { writeFile } from 'fs/promises'
-import { mkdir } from 'fs/promises'
-import { join } from 'path'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
+
+const s3 = new S3Client({
+  endpoint: process.env.MINIO_BUCKET_URL as string,
+  apiVersion: 'latest',
+  region: 'auto',
+  credentials: {
+    accessKeyId: process.env.MINIO_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.MINIO_SECRET_ACCESS_KEY as string,
+  },
+  forcePathStyle: true,
+})
 
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
-
     if (!session) {
       return NextResponse.json({ message: 'Acesso não autorizado' }, { status: 401 })
     }
@@ -34,18 +42,23 @@ export async function POST(req: Request) {
 
     const fileKey = `${uuidv4()}-${file.name.replace(/\s+/g, '-')}`.toLowerCase()
 
-    const uploadDir = join(process.cwd(), 'uploads')
-    await mkdir(uploadDir, { recursive: true })
-
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    const filePath = join(uploadDir, fileKey)
-    await writeFile(filePath, buffer)
+
+    const command = new PutObjectCommand({
+      Bucket: process.env.MINIO_BUCKET_NAME as string,
+      ACL: 'public-read',
+      Key: fileKey,
+      Body: buffer,
+      ContentType: file.type,
+    })
+
+    await s3.send(command)
 
     const document = await prisma.document.create({
       data: {
         name,
-        fileKey,
+        fileKey: `${process.env.MINIO_BUCKET_URL}/${process.env.MINIO_BUCKET_NAME}/${fileKey}`,
         userId: session.user.id,
         status: 'PENDING',
       },
